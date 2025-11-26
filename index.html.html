@@ -1,0 +1,2032 @@
+<!-- PART 1 / 5 : START OF FILE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Community Skill Swap Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-gradient-1: #1a2a6c;
+      --bg-gradient-2: #b21f1f;
+      --bg-gradient-3: #fdbb2d;
+      --card-bg: rgba(18, 24, 38, 0.9);
+      --accent: #ff6ec7;
+      --accent-soft: rgba(255, 110, 199, 0.2);
+      --accent-2: #00f2fe;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-soft: rgba(148, 163, 184, 0.4);
+      --danger: #fb7185;
+      --success: #22c55e;
+      --warning: #fbbf24;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.6);
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #312e81 0, #020617 40%, #000 100%);
+      overflow-x: hidden;
+    }
+
+    /* Animated background overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -30%;
+      background: conic-gradient(from 180deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3), var(--bg-gradient-1));
+      opacity: 0.28;
+      filter: blur(110px);
+      animation: spinGradient 40s linear infinite;
+      z-index: -2;
+    }
+
+    @keyframes spinGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .app-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3.5rem;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      border-radius: 999px;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 1.5rem;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 20% 20%, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #020617;
+      box-shadow: 0 0 25px rgba(248, 250, 252, 0.4);
+    }
+
+    .nav-title {
+      font-size: 0.95rem;
+      line-height: 1.1;
+    }
+
+    .nav-title strong {
+      font-size: 1.05rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.3rem;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      border-color: rgba(148, 163, 184, 0.7);
+      color: var(--text-main);
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.4);
+    }
+
+    .nav-link.nav-active {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #020617;
+      border-color: rgba(248, 250, 252, 0.5);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+
+    .chip-small {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    section {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.75), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 1.75rem 1.65rem 1.6rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.12;
+      background: radial-gradient(circle at top right, rgba(248, 250, 252, 0.7), transparent 60%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    section h2 span.icon {
+      display: inline-flex;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: radial-gradient(circle at 20% 20%, var(--accent), var(--accent-2));
+      color: #020617;
+      box-shadow: 0 0 16px rgba(96, 165, 250, 0.7);
+    }
+
+    section p.lead {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 1rem 1.1rem;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.4), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px) scale(1.01);
+      border-color: rgba(248, 250, 252, 0.6);
+      box-shadow: 0 22px 40px rgba(15, 23, 42, 0.95);
+    }
+
+    .card:hover::before {
+      opacity: 0.35;
+    }
+
+    .card-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+      gap: 0.6rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.95);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+    }
+
+    .badge-accent {
+      border: none;
+      background: rgba(56, 189, 248, 0.16);
+      color: #e0f2fe;
+    }
+
+    .card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+
+    .pill-strong {
+      background: linear-gradient(120deg, rgba(56, 189, 248, 0.18), rgba(244, 114, 182, 0.18));
+      color: #e5e7eb;
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    /* BUTTONS + INPUTS */
+    button, .btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #020617;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 18px 40px rgba(56, 189, 248, 0.5);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), filter var(--transition-med);
+      border: 1px solid rgba(248, 250, 252, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 22px 50px rgba(59, 130, 246, 0.9);
+      filter: brightness(1.05);
+    }
+
+    .btn-ghost {
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), color var(--transition-med), border-color var(--transition-med);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.98);
+      color: var(--text-main);
+      border-color: rgba(248, 250, 252, 0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-small {
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+    }
+
+    .btn-pill {
+      border-radius: 999px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 0.9rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.8rem;
+    }
+
+    .form-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+    }
+
+    .required-star {
+      color: var(--danger);
+      font-size: 0.8rem;
+    }
+
+    .form-control, select, textarea {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.38rem 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    textarea {
+      border-radius: 16px;
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .form-control:focus, select:focus, textarea:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7), 0 16px 30px rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      transform: translateY(-1px);
+    }
+
+    input[type="file"] {
+      padding: 0.3rem 0.5rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+      font-size: 0.75rem;
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.25rem 0.6rem;
+      margin-right: 0.4rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .text-success {
+      color: var(--success);
+    }
+
+    .text-warning {
+      color: var(--warning);
+    }
+
+    .text-danger {
+      color: var(--danger);
+    }
+
+    .flex {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-3 { margin-top: 0.75rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-title {
+      font-size: 1.7rem;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-highlight {
+      background-image: linear-gradient(120deg, #a855f7, #ec4899, #eab308);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .hero-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    .home-actions {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.95rem;
+    }
+
+    .stat {
+      min-width: 90px;
+      padding: 0.5rem 0.7rem;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.75rem;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .floating-orbs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 20% 20%, rgba(248, 250, 252, 0.95), rgba(59, 130, 246, 0.05));
+      opacity: 0.35;
+      filter: blur(1px);
+      animation: floatOrb 16s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .orb:nth-child(2) {
+      width: 80px;
+      height: 80px;
+      top: 60%;
+      left: 70%;
+      animation-duration: 18s;
+      animation-delay: -5s;
+    }
+
+    .orb:nth-child(1) {
+      top: -15%;
+      right: -5%;
+    }
+
+    .orb:nth-child(3) {
+      width: 110px;
+      height: 110px;
+      bottom: -25%;
+      left: -10%;
+      animation-duration: 22s;
+      animation-delay: -9s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(12px, -18px, 0) scale(1.1); }
+    }
+
+    .ai-note {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      padding: 0.25rem 0.65rem;
+      margin-top: 0.45rem;
+      background: rgba(15, 23, 42, 0.88);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.2rem;
+      min-width: 220px;
+      max-width: 320px;
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 16px;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.95);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      z-index: 60;
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .toast-icon {
+      font-size: 1.1rem;
+    }
+
+    .toast-close {
+      margin-left: auto;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    /* Resource list */
+    .resource-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.35rem;
+    }
+
+    .resource-rating {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 0.35rem;
+    }
+
+    .rating-stars {
+      color: #fde68a;
+    }
+
+    .resource-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .resource-comments {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+      padding-top: 0.35rem;
+    }
+
+    .resource-comments strong {
+      color: #e5e7eb;
+    }
+
+    .link-pill {
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 0.25rem 0.55rem;
+      background: rgba(15, 23, 42, 0.9);
+      text-decoration: none;
+      color: #e0f2fe;
+      word-break: break-all;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .link-pill:hover {
+      border-color: rgba(248, 250, 252, 0.7);
+    }
+
+    /* Profile card */
+    .profile-preview {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .profile-photo {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      border: 2px solid rgba(248, 250, 252, 0.7);
+      background-size: cover;
+      background-position: center;
+      background-image: linear-gradient(135deg, #4f46e5, #ec4899);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.9);
+    }
+
+    .profile-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .profile-meta strong {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .profile-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.4rem;
+    }
+
+    .profile-badge {
+      font-size: 0.7rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 999px;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-muted);
+    }
+
+    /* Contact & about */
+    .timeline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: grid;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .timeline-dot {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 999px;
+      background: rgba(251, 191, 36, 0.9);
+      margin-top: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    footer a {
+      color: #a5b4fc;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .section-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      section {
+        padding: 1.4rem 1.2rem 1.2rem;
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-title {
+        font-size: 1.4rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-shell {
+        padding-inline: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+<!-- PART 1 / 5 : END -->
+<!-- PART 2 / 5 : HOME / HERO SECTION -->
+<header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">CS</div>
+        <div class="nav-title">
+          <strong>Community Skill Swap Hub</strong><br />
+          <span class="tagline">Tech Stack Proposal · Front-end MVP</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <button class="nav-link nav-active" data-target="home">Home</button>
+        <button class="nav-link" data-target="explore">Explore</button>
+        <button class="nav-link" data-target="share">Share</button>
+        <button class="nav-link" data-target="ai-tools">AI Tools</button>
+        <button class="nav-link" data-target="profile">Profile</button>
+        <button class="nav-link" data-target="about">About</button>
+        <button class="nav-link" data-target="contact">Contact</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME SECTION -->
+    <section id="home">
+      <div class="floating-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+      </div>
+
+      <div class="section-grid">
+        <div>
+          <span class="chip-small">MVP · Front-end only · Mock data</span>
+          <h2 class="mt-2">
+            <span class="icon">⚡</span>
+            Welcome to your <span class="hero-highlight">Skill Swap Hub</span>
+          </h2>
+          <p class="hero-sub">
+            A prototype platform where learners can <strong>share resources</strong>, create
+            <strong>skill profiles</strong>, and explore curated tools across hobbies like
+            Coding, Baking, Art, and AI.
+          </p>
+
+          <div class="home-actions">
+            <button class="btn-primary" data-target="share">
+              Share a resource
+              <span>➜</span>
+            </button>
+            <button class="btn-ghost" data-target="explore">
+              Browse hobbies
+            </button>
+            <button class="btn-ghost btn-small" data-target="profile">
+              Create profile
+            </button>
+          </div>
+
+          <div class="ai-note">
+            Note for submission: Update your ReadMe.md to declare how you used
+            generative AI (e.g., brainstorming, planning, feedback) according to the
+            module brief.
+          </div>
+
+          <div class="stats-row">
+            <div class="stat">
+              <strong id="stat-resources">12</strong>
+              Resources
+              <br />
+              <span class="text-muted">Mock data only</span>
+            </div>
+            <div class="stat">
+              <strong>6</strong>
+              Hobbies
+              <br />
+              <span class="text-muted">Coding, Baking, Art & more</span>
+            </div>
+            <div class="stat">
+              <strong>1</strong>
+              AI tools area
+              <br />
+              <span class="text-muted">Dedicated AI category</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title-row">
+              <div class="card-title">Tech Stack Snapshot</div>
+              <span class="badge badge-accent">Front-end pilot</span>
+            </div>
+            <p>
+              This demo focuses on the <strong>user interface</strong> only. No real
+              authentication or database – everything uses <strong>JavaScript mock data</strong>.
+            </p>
+            <div class="pill-row mt-2">
+              <span class="pill pill-strong">HTML5 · CSS3 · JavaScript</span>
+              <span class="pill">Responsive layout</span>
+              <span class="pill">Animated gradient UI</span>
+              <span class="pill">Search + filters</span>
+              <span class="pill">Mock upvotes & comments</span>
+            </div>
+
+            <div class="timeline mt-3">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div>
+                  <strong>Semester 1</strong> – Design front-end MVP and document tech stack,
+                  legal / ethical issues, and risks.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div>
+                  <strong>Semester 2</strong> – Extend to full stack (back-end, database,
+                  authentication, deployment).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-2">
+            <div class="card-title-row">
+              <div class="card-title">User journey (high-level)</div>
+              <span class="badge">Project planning</span>
+            </div>
+            <p>
+              Users can choose to <strong>explore as guest</strong>, <strong>create a profile</strong>,
+              or <strong>share resources</strong>. This matches the MVP requirement for a
+              simple homepage guiding key paths.
+            </p>
+            <div class="pill-row mt-2">
+              <span class="pill">Guest browsing</span>
+              <span class="pill">Share a resource</span>
+              <span class="pill">AI tools spotlight</span>
+              <span class="pill">Contact support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- PART 2 / 5 : END -->
+<!-- PART 3 / 5 : EXPLORE + AI TOOLS SECTIONS -->
+
+    <!-- EXPLORE RESOURCES SECTION -->
+    <section id="explore">
+        <h2>
+          <span class="icon">🔎</span>
+          Explore resources & tools
+        </h2>
+        <p class="lead">
+          Search, filter, and upvote mock resources shared by the community. In a full
+          implementation, these would be stored in a database and loaded via an API.
+        </p>
+  
+        <div class="resource-controls">
+          <input
+            type="text"
+            id="search-input"
+            class="form-control"
+            placeholder="Search by keyword or title..."
+          />
+  
+          <select id="filter-category">
+            <option value="all">All hobbies</option>
+            <option value="Coding">Coding</option>
+            <option value="3D Printing">3D Printing</option>
+            <option value="Baking">Baking</option>
+            <option value="Art">Art</option>
+            <option value="Music">Music</option>
+            <option value="AI in Hobbies">AI in Hobbies</option>
+          </select>
+  
+          <button class="btn-ghost btn-small" id="filter-ai-toggle">
+            🎛 AI tools only: <span id="filter-ai-label">Off</span>
+          </button>
+  
+          <button class="btn-ghost btn-small" id="sort-rating-btn">
+            ⭐ Sort by rating
+          </button>
+        </div>
+  
+        <div class="resource-list" id="resource-list">
+          <!-- Filled by JS -->
+        </div>
+      </section>
+  
+      <!-- AI TOOLS SECTION -->
+      <section id="ai-tools">
+        <h2>
+          <span class="icon">🤖</span>
+          AI tools for hobbies
+        </h2>
+        <p class="lead">
+          This dedicated panel highlights resources tagged as <strong>AI in Hobbies</strong> –
+          for example AI art generators, AI code assistants, and music composition tools.
+        </p>
+  
+        <div class="card">
+          <div class="card-title-row">
+            <div class="card-title">AI-specific resource view</div>
+            <span class="badge badge-accent">Category: AI in Hobbies</span>
+          </div>
+          <p>
+            The list below is automatically filtered from the same mock data used in the
+            Explore section. In a complete system, this view might call a specific API
+            endpoint or use a more complex recommendation model.
+          </p>
+  
+          <div class="resource-list mt-2" id="ai-resource-list">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </section>
+  <!-- PART 3 / 5 : END -->
+<!-- PART 4 / 5 : SHARE + PROFILE + ABOUT + CONTACT + FOOTER -->
+
+    <!-- SHARE RESOURCE SECTION -->
+    <section id="share">
+        <h2>
+          <span class="icon">📤</span>
+          Share a resource (mock form)
+        </h2>
+        <p class="lead">
+          This form lets users submit links to tutorials, articles, GitHub repositories, or
+          other tools. Submitted entries are added to the in-memory mock list.
+        </p>
+  
+        <form id="share-form" class="mt-2">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="resource-title">
+                Title <span class="required-star">*</span>
+              </label>
+              <input id="resource-title" class="form-control" type="text" required />
+            </div>
+  
+            <div class="form-group">
+              <label class="form-label" for="resource-category">
+                Category (hobby) <span class="required-star">*</span>
+              </label>
+              <select id="resource-category" required>
+                <option value="">Select a hobby...</option>
+                <option value="Coding">Coding</option>
+                <option value="3D Printing">3D Printing</option>
+                <option value="Baking">Baking</option>
+                <option value="Art">Art</option>
+                <option value="Music">Music</option>
+                <option value="AI in Hobbies">AI in Hobbies</option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label class="form-label" for="resource-link">
+                URL <span class="required-star">*</span>
+              </label>
+              <input
+                id="resource-link"
+                type="url"
+                class="form-control"
+                placeholder="https://example.com"
+                required
+              />
+            </div>
+  
+            <div class="form-group">
+              <label class="form-label" for="resource-type">
+                Resource type
+              </label>
+              <select id="resource-type">
+                <option value="Tutorial">Tutorial</option>
+                <option value="Video">Video</option>
+                <option value="Tool">Tool</option>
+                <option value="Book/Article">Book / Article</option>
+                <option value="GitHub Repo">GitHub repository</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group mt-2">
+            <label class="form-label" for="resource-desc">
+              Short description <span class="required-star">*</span>
+            </label>
+            <textarea
+              id="resource-desc"
+              placeholder="What will learners gain from this resource?"
+              required
+            ></textarea>
+          </div>
+  
+          <div class="flex mt-2">
+            <label class="form-label">
+              <input type="checkbox" id="resource-is-ai" />
+              &nbsp; This is an <strong>AI-related</strong> tool
+            </label>
+          </div>
+  
+          <div class="flex-between mt-3">
+            <button type="submit" class="btn-primary">
+              Add to mock list
+            </button>
+            <div class="hint">
+              All mandatory fields are marked with
+              <span class="required-star">*</span>.
+            </div>
+          </div>
+        </form>
+      </section>
+  
+      <!-- PROFILE SECTION -->
+      <section id="profile">
+        <h2>
+          <span class="icon">👤</span>
+          User profile & login (demo only)
+        </h2>
+        <p class="lead">
+          The real system would handle user registration and authentication on the
+          <strong>server-side</strong>. Here we only simulate profile creation with front-end
+          mock data.
+        </p>
+  
+        <div class="section-grid">
+          <div>
+            <form id="profile-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="full-name">
+                    Full name <span class="required-star">*</span>
+                  </label>
+                  <input id="full-name" class="form-control" type="text" required />
+                </div>
+  
+                <div class="form-group">
+                  <label class="form-label" for="email">
+                    Email <span class="required-star">*</span>
+                  </label>
+                  <input id="email" class="form-control" type="email" required />
+                </div>
+  
+                <div class="form-group">
+                  <label class="form-label" for="pronouns">
+                    Pronouns (optional)
+                  </label>
+                  <input id="pronouns" class="form-control" type="text" placeholder="she/her, he/him, they/them..." />
+                </div>
+  
+                <div class="form-group">
+                  <label class="form-label" for="phone">
+                    Phone (optional)
+                  </label>
+                  <input id="phone" class="form-control" type="tel" />
+                </div>
+              </div>
+  
+              <div class="form-group mt-2">
+                <label class="form-label" for="hobbies">
+                  Hobbies / skills <span class="required-star">*</span>
+                </label>
+                <input
+                  id="hobbies"
+                  class="form-control"
+                  type="text"
+                  placeholder="e.g. Front-end web, Baking, Digital art"
+                  required
+                />
+                <div class="hint">
+                  Separate multiple hobbies with commas.
+                </div>
+              </div>
+  
+              <div class="form-group mt-2">
+                <label class="form-label" for="photo">
+                  Profile photograph upload <span class="required-star">*</span>
+                </label>
+                <input id="photo" type="file" accept="image/*" required />
+                <div class="hint">
+                  For the MVP, we only preview this image on the front-end – no real storage.
+                </div>
+              </div>
+  
+              <div class="flex-between mt-3">
+                <button type="submit" class="btn-primary">
+                  Save profile (mock)
+                </button>
+                <span class="hint text-warning">
+                  Data here is not persisted – refresh to reset.
+                </span>
+              </div>
+            </form>
+  
+            <hr class="mt-3" style="border-color: rgba(148,163,184,0.4)" />
+  
+            <form id="login-form" class="mt-3">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="login-email">
+                    Login email
+                  </label>
+                  <input id="login-email" class="form-control" type="email" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="login-password">
+                    Password
+                  </label>
+                  <input id="login-password" class="form-control" type="password" />
+                </div>
+              </div>
+              <div class="flex-between mt-2">
+                <button type="submit" class="btn-ghost btn-small">
+                  Simulate login
+                </button>
+                <span class="hint">
+                  In a real stack, this would call a secure authentication API.
+                </span>
+              </div>
+            </form>
+          </div>
+  
+          <div>
+            <div class="card">
+              <div class="card-title-row">
+                <div class="card-title">Profile preview (mock)</div>
+                <span class="badge badge-accent">Live preview</span>
+              </div>
+              <p class="hint">
+                Once you fill in the form and click <strong>Save profile</strong>, your details
+                will appear here.
+              </p>
+  
+              <div class="profile-preview mt-2" id="profile-preview">
+                <div class="profile-photo" id="profile-photo-preview"></div>
+                <div class="profile-meta">
+                  <strong id="profile-name-display">No profile yet</strong>
+                  <div id="profile-email-display"></div>
+                  <div id="profile-pronouns-display"></div>
+                  <div id="profile-phone-display"></div>
+                  <div class="profile-badges" id="profile-hobbies-display"></div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="card mt-2">
+              <div class="card-title-row">
+                <div class="card-title">Good software attributes</div>
+                <span class="badge">Quality</span>
+              </div>
+              <p>
+                When you describe this UI in your documentation, you can relate it to concepts
+                like <strong>usability</strong>, <strong>maintainability</strong>,
+                <strong>scalability</strong>, and <strong>security</strong> (for the future
+                full-stack version).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ABOUT SECTION -->
+      <section id="about">
+        <h2>
+          <span class="icon">📚</span>
+          About this project
+        </h2>
+        <p class="lead">
+          The Community Skill Swap Hub is designed as a <strong>pilot web application</strong>
+          that can grow into a full-scale platform where learners exchange skills and resources.
+        </p>
+  
+        <div class="section-grid">
+          <div>
+            <div class="card">
+              <div class="card-title-row">
+                <div class="card-title">Project goals</div>
+                <span class="badge">Overview</span>
+              </div>
+              <ul class="timeline mt-2">
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>Provide an intuitive front-end for browsing and sharing skill resources.</div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>Demonstrate basic UI patterns: forms, search, filtering, and feedback.</div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    Prepare a foundation that can later connect to a <strong>back-end API</strong>
+                    and database.
+                  </div>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="card mt-2">
+              <div class="card-title-row">
+                <div class="card-title">Legal & ethical considerations</div>
+                <span class="badge">Discussion</span>
+              </div>
+              <p>
+                In your written documentation, you should discuss privacy, consent, copyright,
+                accessibility, and responsible AI use. For example:
+              </p>
+              <ul class="timeline mt-2">
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    How user data (profiles, emails, hobbies) will be stored securely when the
+                    back-end is implemented.
+                  </div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    How copyright is handled for shared resources (e.g. linking to official
+                    content vs. hosting copies).
+                  </div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    How you will comply with institutional policies on generative AI and academic
+                    integrity.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <div>
+            <div class="card">
+              <div class="card-title-row">
+                <div class="card-title">Future scaling ideas</div>
+                <span class="badge">Future work</span>
+              </div>
+              <p>
+                The MVP is intentionally simple and front-end only. In the second semester you
+                could:
+              </p>
+              <ul class="timeline mt-2">
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>Implement real authentication and user accounts with a server-side stack.</div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    Persist resources, ratings, and comments using a database and REST/GraphQL API.
+                  </div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div>
+                    Add optional enhancements like bookmarking, richer profiles, or voting systems.
+                  </div>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="card mt-2">
+              <div class="card-title-row">
+                <div class="card-title">Use of generative AI</div>
+                <span class="badge badge-accent">Important</span>
+              </div>
+              <p class="hint">
+                Remember to include a statement such as:
+                <br />
+                <em>“This assignment used generative AI for brainstorming, research, planning,
+                feedback, and/or editing.”</em> (adapt it to match what you actually did.)
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- CONTACT SECTION -->
+      <section id="contact">
+        <h2>
+          <span class="icon">✉️</span>
+          Contact us (mock support)
+        </h2>
+        <p class="lead">
+          In a production system, this form would send a message to the support team. Here it
+          simply shows a confirmation toast to demonstrate the interaction.
+        </p>
+  
+        <form id="contact-form" class="mt-2">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="contact-name">
+                Your name <span class="required-star">*</span>
+              </label>
+              <input id="contact-name" class="form-control" type="text" required />
+            </div>
+  
+            <div class="form-group">
+              <label class="form-label" for="contact-email">
+                Your email <span class="required-star">*</span>
+              </label>
+              <input id="contact-email" class="form-control" type="email" required />
+            </div>
+          </div>
+  
+          <div class="form-group mt-2">
+            <label class="form-label" for="contact-message">
+              Message <span class="required-star">*</span>
+            </label>
+            <textarea
+              id="contact-message"
+              placeholder="How can the Skill Swap team help you?"
+              required
+            ></textarea>
+          </div>
+  
+          <div class="flex-between mt-3">
+            <button type="submit" class="btn-primary">
+              Send message (demo)
+            </button>
+            <span class="hint">
+              For the assignment, you can describe this as part of the “Contact Us” requirement.
+            </span>
+          </div>
+        </form>
+      </section>
+  
+      <footer>
+        <div>
+          Community Skill Swap Hub · COM4113 Tech Stack ·
+          <span class="text-muted">Front-end MVP prototype</span>
+        </div>
+        <div class="mt-1">
+          <!-- You can keep or edit this comment before submission -->
+          <span class="hint">
+            Generated with the help of a generative AI assistant (ChatGPT). Make sure you adapt
+            the code, understand it, and document your AI usage according to your university
+            policy.
+          </span>
+        </div>
+      </footer>
+    </main>
+  
+    <!-- Toast element -->
+    <div class="toast" id="toast">
+      <div class="toast-icon" id="toast-icon">✅</div>
+      <div>
+        <div id="toast-title" style="font-weight:600; font-size:0.8rem;">Saved</div>
+        <div id="toast-message" style="font-size:0.75rem;"></div>
+      </div>
+      <button class="toast-close" id="toast-close">✕</button>
+    </div>
+  <!-- PART 4 / 5 : END -->
+    <!-- PART 5 / 5 : JAVASCRIPT + CLOSING TAGS -->
+  <script>
+    // -----------------------------
+    // Smooth navigation
+    // -----------------------------
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-link");
+    const scrollTargets = document.querySelectorAll("[data-target]");
+
+    function showSection(id) {
+      const target = document.getElementById(id);
+      if (!target) return;
+      const y = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+
+      navLinks.forEach((btn) => {
+        btn.classList.toggle("nav-active", btn.dataset.target === id);
+      });
+    }
+
+    scrollTargets.forEach((el) => {
+      el.addEventListener("click", () => showSection(el.dataset.target));
+    });
+
+    // -----------------------------
+    // Toast helper
+    // -----------------------------
+    const toastEl = document.getElementById("toast");
+    const toastTitleEl = document.getElementById("toast-title");
+    const toastMsgEl = document.getElementById("toast-message");
+    const toastIconEl = document.getElementById("toast-icon");
+    const toastCloseBtn = document.getElementById("toast-close");
+    let toastTimeout;
+
+    function showToast({ title, message, type = "success" }) {
+      if (!toastEl) return;
+      const icon = type === "error" ? "⚠️" : type === "info" ? "ℹ️" : "✅";
+      toastIconEl.textContent = icon;
+      toastTitleEl.textContent = title;
+      toastMsgEl.textContent = message;
+
+      toastEl.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 3500);
+    }
+
+    toastCloseBtn.addEventListener("click", () =>
+      toastEl.classList.remove("show")
+    );
+
+    // -----------------------------
+    // Mock data for resources
+    // -----------------------------
+    let nextResourceId = 1000;
+
+    const mockResources = [
+      {
+        id: nextResourceId++,
+        title: "FreeCodeCamp Responsive Web Design",
+        category: "Coding",
+        type: "Tutorial",
+        description:
+          "A full curriculum to learn HTML, CSS, and modern responsive layouts.",
+        link: "https://www.freecodecamp.org/learn",
+        rating: 45,
+        isAI: false,
+        comments: ["Great starting point for web dev!", "Loved the projects."]
+      },
+      {
+        id: nextResourceId++,
+        title: "MDN Web Docs: JavaScript Guide",
+        category: "Coding",
+        type: "Documentation",
+        description:
+          "Official Mozilla documentation, ideal for deepening JavaScript knowledge.",
+        link: "https://developer.mozilla.org/",
+        rating: 38,
+        isAI: false,
+        comments: ["Clear reference for JS basics and advanced topics."]
+      },
+      {
+        id: nextResourceId++,
+        title: "Fusion 360 Basics for 3D Printing",
+        category: "3D Printing",
+        type: "Video",
+        description:
+          "Intro to modelling simple objects suitable for hobby 3D printers.",
+        link: "https://www.youtube.com/",
+        rating: 27,
+        isAI: false,
+        comments: []
+      },
+      {
+        id: nextResourceId++,
+        title: "Beginner Sourdough Bread Recipe",
+        category: "Baking",
+        type: "Tutorial",
+        description:
+          "Step-by-step sourdough recipe with clear timings and troubleshooting tips.",
+        link: "https://example.com/sourdough",
+        rating: 31,
+        isAI: false,
+        comments: ["Perfect crust!", "Time consuming but worth it."]
+      },
+      {
+        id: nextResourceId++,
+        title: "Procreate Basics: Digital Illustration",
+        category: "Art",
+        type: "Course",
+        description:
+          "Covers layers, brushes, and colour theory for digital sketching.",
+        link: "https://example.com/procreate-course",
+        rating: 24,
+        isAI: false,
+        comments: []
+      },
+      {
+        id: nextResourceId++,
+        title: "AI Art Generator for Concept Sketches",
+        category: "AI in Hobbies",
+        type: "Tool",
+        description:
+          "Generate concept art ideas using text prompts, then refine manually.",
+        link: "https://example.com/ai-art",
+        rating: 36,
+        isAI: true,
+        comments: ["Fun for brainstorming character designs."]
+      },
+      {
+        id: nextResourceId++,
+        title: "GitHub: Awesome Public Datasets",
+        category: "Coding",
+        type: "GitHub Repo",
+        description:
+          "A curated list of interesting public datasets for experiments.",
+        link: "https://github.com/awesomedata/awesome-public-datasets",
+        rating: 22,
+        isAI: false,
+        comments: []
+      },
+      {
+        id: nextResourceId++,
+        title: "LoFi Beats for Deep Focus",
+        category: "Music",
+        type: "Playlist",
+        description:
+          "Several hours of non-distracting background music for coding or studying.",
+        link: "https://www.youtube.com/",
+        rating: 29,
+        isAI: false,
+        comments: ["Helps me stay focused while studying."]
+      },
+      {
+        id: nextResourceId++,
+        title: "AI Pair Programmer (Code Assistant)",
+        category: "AI in Hobbies",
+        type: "Tool",
+        description:
+          "An AI-powered assistant that suggests code snippets and explains errors.",
+        link: "https://example.com/ai-code-assistant",
+        rating: 40,
+        isAI: true,
+        comments: ["Great for debugging student projects."]
+      },
+      {
+        id: nextResourceId++,
+        title: "AI Music Composition Sandbox",
+        category: "AI in Hobbies",
+        type: "Tool",
+        description:
+          "Create simple background tracks using AI and edit them manually.",
+        link: "https://example.com/ai-music",
+        rating: 33,
+        isAI: true,
+        comments: []
+      }
+    ];
+
+    let resources = [...mockResources];
+
+    const resourceListEl = document.getElementById("resource-list");
+    const aiResourceListEl = document.getElementById("ai-resource-list");
+    const statResourcesEl = document.getElementById("stat-resources");
+
+    const searchInputEl = document.getElementById("search-input");
+    const filterCategoryEl = document.getElementById("filter-category");
+    const filterAiToggleBtn = document.getElementById("filter-ai-toggle");
+    const filterAiLabelEl = document.getElementById("filter-ai-label");
+    const sortRatingBtn = document.getElementById("sort-rating-btn");
+
+    let filterAIOnly = false;
+    let sortByRatingDesc = false;
+
+    function updateResourceStat() {
+      if (statResourcesEl) {
+        statResourcesEl.textContent = resources.length.toString();
+      }
+    }
+
+    function applyFilters() {
+      const query = (searchInputEl?.value || "").toLowerCase().trim();
+      const category = filterCategoryEl?.value || "all";
+
+      let list = [...resources];
+
+      if (query) {
+        list = list.filter(
+          (res) =>
+            res.title.toLowerCase().includes(query) ||
+            res.description.toLowerCase().includes(query)
+        );
+      }
+
+      if (category !== "all") {
+        list = list.filter((res) => res.category === category);
+      }
+
+      if (filterAIOnly) {
+        list = list.filter((res) => res.isAI);
+      }
+
+      if (sortByRatingDesc) {
+        list.sort((a, b) => b.rating - a.rating);
+      }
+
+      renderResourceList(list, resourceListEl);
+    }
+
+    function renderResourceList(list, container) {
+      if (!container) return;
+      if (!list.length) {
+        container.innerHTML =
+          '<p class="hint mt-2">No resources found. Try adjusting your search or filters.</p>';
+        return;
+      }
+
+      container.innerHTML = list
+        .map((res) => {
+          const commentsPreview = res.comments?.slice(0, 2) || [];
+          const commentsHtml = commentsPreview
+            .map(
+              (c) =>
+                `<div><strong>•</strong> ${c.replace(
+                  /</g,
+                  "&lt;"
+                )}</div>`
+            )
+            .join("");
+
+          const stars = "★".repeat(Math.min(5, Math.max(1, Math.round(res.rating / 10))));
+          return `
+          <article class="card" data-id="${res.id}">
+            <div class="card-title-row">
+              <div class="card-title">${res.title}</div>
+              <span class="badge ${
+                res.isAI ? "badge-accent" : ""
+              }">${res.category}</span>
+            </div>
+            <p>${res.description}</p>
+            <div class="resource-rating">
+              <span class="rating-stars">${stars}</span>
+              <span>${res.rating} upvotes</span>
+              <span>· ${res.type}</span>
+            </div>
+            <div class="resource-footer">
+              <a href="${res.link}" target="_blank" class="link-pill">
+                Open link ↗
+              </a>
+              <div class="flex">
+                <button class="btn-ghost btn-small btn-upvote" data-id="${res.id}">
+                  ⬆ Upvote
+                </button>
+                <button class="btn-ghost btn-small btn-comment" data-id="${res.id}">
+                  💬 Comment
+                </button>
+              </div>
+            </div>
+            ${
+              commentsPreview.length
+                ? `<div class="resource-comments">
+                    ${commentsHtml}
+                    ${
+                      res.comments.length > commentsPreview.length
+                        ? `<div class="hint mt-1">+ ${res.comments.length - commentsPreview.length} more comment(s)</div>`
+                        : ""
+                    }
+                  </div>`
+                : ""
+            }
+          </article>`;
+        })
+        .join("");
+
+      // Attach button handlers
+      container.querySelectorAll(".btn-upvote").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = Number(btn.dataset.id);
+          const res = resources.find((r) => r.id === id);
+          if (!res) return;
+          res.rating += 1;
+          showToast({
+            title: "Upvoted",
+            message: `You upvoted "${res.title}".`,
+            type: "success"
+          });
+          applyFilters();
+          renderAITools(); // keep AI view in sync
+        });
+      });
+
+      container.querySelectorAll(".btn-comment").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = Number(btn.dataset.id);
+          const res = resources.find((r) => r.id === id);
+          if (!res) return;
+          const comment = window.prompt(
+            `Add a short comment for "${res.title}":`
+          );
+          if (comment && comment.trim()) {
+            res.comments = res.comments || [];
+            res.comments.push(comment.trim());
+            showToast({
+              title: "Comment added",
+              message: "Your feedback has been added (mock only).",
+              type: "info"
+            });
+            applyFilters();
+            renderAITools();
+          }
+        });
+      });
+    }
+
+    function renderAITools() {
+      if (!aiResourceListEl) return;
+      const aiList = resources.filter((r) => r.isAI);
+      renderResourceList(aiList, aiResourceListEl);
+    }
+
+    // Filters events
+    searchInputEl?.addEventListener("input", () => applyFilters());
+    filterCategoryEl?.addEventListener("change", () => applyFilters());
+    filterAiToggleBtn?.addEventListener("click", () => {
+      filterAIOnly = !filterAIOnly;
+      filterAiLabelEl.textContent = filterAIOnly ? "On" : "Off";
+      applyFilters();
+    });
+    sortRatingBtn?.addEventListener("click", () => {
+      sortByRatingDesc = !sortByRatingDesc;
+      sortRatingBtn.textContent = sortByRatingDesc
+        ? "⭐ Sort by rating (desc)"
+        : "⭐ Sort by rating";
+      applyFilters();
+    });
+
+    // -----------------------------
+    // Share resource form
+    // -----------------------------
+    const shareForm = document.getElementById("share-form");
+
+    shareForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("resource-title").value.trim();
+      const category = document.getElementById("resource-category").value;
+      const link = document.getElementById("resource-link").value.trim();
+      const desc = document.getElementById("resource-desc").value.trim();
+      const type =
+        document.getElementById("resource-type").value || "Tutorial";
+      const isAI = document.getElementById("resource-is-ai").checked;
+
+      if (!title || !category || !link || !desc) {
+        showToast({
+          title: "Missing fields",
+          message: "Please fill in all mandatory fields before submitting.",
+          type: "error"
+        });
+        return;
+      }
+
+      resources.push({
+        id: nextResourceId++,
+        title,
+        category,
+        type,
+        description: desc,
+        link,
+        rating: 1,
+        isAI,
+        comments: []
+      });
+
+      shareForm.reset();
+      updateResourceStat();
+      applyFilters();
+      renderAITools();
+
+      showToast({
+        title: "Resource added",
+        message: "Your mock resource has been added to the local list.",
+        type: "success"
+      });
+    });
+
+    // -----------------------------
+    // Profile + photo preview
+    // -----------------------------
+    const profileForm = document.getElementById("profile-form");
+    const profilePhotoInput = document.getElementById("photo");
+    const profilePhotoPreview = document.getElementById(
+      "profile-photo-preview"
+    );
+    const profileNameDisplay = document.getElementById(
+      "profile-name-display"
+    );
+    const profileEmailDisplay = document.getElementById(
+      "profile-email-display"
+    );
+    const profilePronounsDisplay = document.getElementById(
+      "profile-pronouns-display"
+    );
+    const profilePhoneDisplay = document.getElementById(
+      "profile-phone-display"
+    );
+    const profileHobbiesDisplay = document.getElementById(
+      "profile-hobbies-display"
+    );
+
+    profilePhotoInput?.addEventListener("change", () => {
+      const file = profilePhotoInput.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        profilePhotoPreview.style.backgroundImage = `url('${ev.target.result}')`;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    profileForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById("full-name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const pronouns = document.getElementById("pronouns").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const hobbiesRaw = document.getElementById("hobbies").value.trim();
+
+      if (!fullName || !email || !hobbiesRaw) {
+        showToast({
+          title: "Missing fields",
+          message: "Full name, email, and hobbies are mandatory.",
+          type: "error"
+        });
+        return;
+      }
+
+      profileNameDisplay.textContent = fullName;
+      profileEmailDisplay.textContent = email ? `📧 ${email}` : "";
+      profilePronounsDisplay.textContent = pronouns
+        ? `Pronouns: ${pronouns}`
+        : "";
+      profilePhoneDisplay.textContent = phone ? `📞 ${phone}` : "";
+
+      const hobbies = hobbiesRaw.split(",").map((h) => h.trim()).filter(Boolean);
+      profileHobbiesDisplay.innerHTML = hobbies
+        .map(
+          (h) =>
+            `<span class="profile-badge">🌱 ${h.replace(/</g, "&lt;")}</span>`
+        )
+        .join("");
+
+      showToast({
+        title: "Profile saved",
+        message: "Your profile preview has been updated locally.",
+        type: "success"
+      });
+    });
+
+    // -----------------------------
+    // Login simulation
+    // -----------------------------
+    const loginForm = document.getElementById("login-form");
+
+    loginForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value.trim();
+
+      if (!email) {
+        showToast({
+          title: "Missing email",
+          message: "Enter an email to simulate login.",
+          type: "error"
+        });
+        return;
+      }
+
+      showToast({
+        title: "Login simulated",
+        message:
+          "You are now 'logged in' as " +
+          email +
+          " (front-end demo only, no real auth).",
+        type: "info"
+      });
+    });
+
+    // -----------------------------
+    // Contact form
+    // -----------------------------
+    const contactForm = document.getElementById("contact-form");
+
+    contactForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("contact-name").value.trim();
+      const email = document.getElementById("contact-email").value.trim();
+      const msg = document.getElementById("contact-message").value.trim();
+
+      if (!name || !email || !msg) {
+        showToast({
+          title: "Missing fields",
+          message: "Please complete all contact fields.",
+          type: "error"
+        });
+        return;
+      }
+
+      contactForm.reset();
+      showToast({
+        title: "Message sent",
+        message:
+          "Thank you, " +
+          name +
+          ". This demo just shows the interaction; no message is actually sent.",
+        type: "success"
+      });
+    });
+
+    // -----------------------------
+    // Initial render
+    // -----------------------------
+    updateResourceStat();
+    applyFilters();
+    renderAITools();
+  </script>
+</div>
+</body>
+</html>
+<!-- PART 5 / 5 : END OF FILE -->
